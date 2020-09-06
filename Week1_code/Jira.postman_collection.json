@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "3efc8870-b407-4f1d-957c-36f0031c6617",
+		"name": "Jira",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all issues",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "N8y237ZgGU7E1fuOsGfo6E99",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "hari.radhakrishnan@testleaf.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api-may2020.atlassian.net/rest/api/2/search?jql=issuetype=story&jql=project=RA",
+					"protocol": "https",
+					"host": [
+						"api-may2020",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "issuetype=story"
+						},
+						{
+							"key": "jql",
+							"value": "project=RA"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
