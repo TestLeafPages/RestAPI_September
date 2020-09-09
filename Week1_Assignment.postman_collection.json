@@ -1,0 +1,382 @@
+{
+	"info": {
+		"_postman_id": "7fb9fb5b-dcf9-487a-9e8c-3eb4f0d677dc",
+		"name": "Week1_Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ServiceNow",
+			"item": [
+				{
+					"name": "create change requests using data file",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "India@123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"short_description\":\"{{short_desc}}\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "https://dev68594.service-now.com/api/now/table/change_request",
+							"protocol": "https",
+							"host": [
+								"dev68594",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update type as normal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f78e9690-f199-4b9d-b2e3-a6fdac6e8747",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "India@123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"type\":\"normal\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "https://dev68594.service-now.com/api/now/table/change_request/{{sys_id}}",
+							"protocol": "https",
+							"host": [
+								"dev68594",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request",
+								"{{sys_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create change requests using data file Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5fd26213-9f57-4757-ad11-b4819801a4d5",
+								"exec": [
+									"var resp = pm.response.json();\r",
+									"\r",
+									"var count = resp.result.length;\r",
+									"\r",
+									"var ranNum = Math.floor(Math.random() * count);\r",
+									"\r",
+									"var id = resp.result[ranNum].sys_id;\r",
+									"\r",
+									"console.log(id);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result[ranNum].sys_id).to.eql(id);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.globals.set(\"sys_id\", id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "India@123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://dev68594.service-now.com/api/now/table/change_request?sysparm_fields=number,sys_id,type&type=emergency",
+							"protocol": "https",
+							"host": [
+								"dev68594",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request"
+							],
+							"query": [
+								{
+									"key": "sysparm_fields",
+									"value": "number,sys_id,type"
+								},
+								{
+									"key": "type",
+									"value": "emergency"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify the response for data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1b024b7c-3ec9-4d7d-8744-c3e076dab7c0",
+								"exec": [
+									"var desc = data['short_desc'];\r",
+									"var ty = data['type']\r",
+									"\r",
+									"\r",
+									"pm.test(\"verify response data\", function () {\r",
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result.short_description).to.eql(desc);\r",
+									"    pm.expect(jsonData.result.type).to.eql(ty);\r",
+									"});\r",
+									"\r",
+									"/* pm.test(\"verify type\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result.type).to.eql(\"normal\");\r",
+									"});*/"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "India@123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"short_description\":\"{{short_desc}}\",\r\n\"type\":\"{{type}}\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "https://dev68594.service-now.com/api/now/table/change_request",
+							"protocol": "https",
+							"host": [
+								"dev68594",
+								"service-now",
+								"com"
+							],
+							"path": [
+								"api",
+								"now",
+								"table",
+								"change_request"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Jira",
+			"item": [
+				{
+					"name": "Get all issues created within 24 hours",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67e80791-f766-49cd-b930-70dc04788b02",
+								"exec": [
+									"var resp = pm.response.json();\r",
+									"\r",
+									"var count = resp.issues.length;\r",
+									"\r",
+									"var current_time = new Date().getTime();\r",
+									"\r",
+									"var time_before_24_hours = current_time - (24*60*60*1000);\r",
+									"\r",
+									"var issue_count = 0;\r",
+									"\r",
+									"for(var index = 0 ; index < count; index++){\r",
+									"\r",
+									"   var issue_time = resp.issues[index].fields.created;\r",
+									"\r",
+									"   var issue_created_time = new Date(issue_time).getTime();\r",
+									"\r",
+									"   if(issue_created_time > time_before_24_hours){\r",
+									"\r",
+									"       console.log(resp.issues[index].id);\r",
+									"\r",
+									"       issue_count = issue_count+1;\r",
+									"   }\r",
+									"\r",
+									"console.log(issue_count)\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "zsyrQFfc9teOn1FX3wosEDED",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "hari.radhakrishnan@testleaf.com",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api-may2020.atlassian.net/rest/api/2/search",
+							"protocol": "https",
+							"host": [
+								"api-may2020",
+								"atlassian",
+								"net"
+							],
+							"path": [
+								"rest",
+								"api",
+								"2",
+								"search"
+							],
+							"query": [
+								{
+									"key": "jql",
+									"value": "project=RA",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
